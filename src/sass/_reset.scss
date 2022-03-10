@@ -6,21 +6,20 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Poppins', sans-serif !important;
   transition: all ease-in-out 0.25s;
 }
 
-html {
-  font-size: 62.5%;
-}
-
 body {
-  font-family: 'Poppins', sans-serif;
   font-size: vars.$small-font-size;
   letter-spacing: vars.$small-letter-spacing;
+  color: vars.$text-color;
 }
 
 input {
-  font-family: inherit;
+  width: 100% !important;
+  font-family: 'Poppins', sans-serif !important;
+  font-size: vars.$small-font-size !important;
   border: 0;
   border-radius: inherit;
   outline: none;

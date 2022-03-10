@@ -1,0 +1,45 @@
+@use '../../../../sass/variables' as vars;
+.todo-list {
+  $padding: vars.$small-gap;
+  padding: $padding;
+
+  &__wrapper {
+    padding: vars.$medium-gap $padding;
+    background-color: rgba($color: vars.$active-color, $alpha: 0.1);
+    border-radius: vars.$rounded;
+  }
+
+  &__heading {
+    font-size: vars.$large-font-size !important;
+  }
+
+  &__quantity {
+    $size: 1.875rem;
+
+    padding: 2px;
+    border: vars.$border-slight-width solid vars.$active-color;
+    border-radius: 50%;
+
+    & > span {
+      display: block;
+      width: $size;
+      height: $size;
+
+      line-height: $size;
+      text-align: center;
+      background-color: vars.$active-color;
+      color: vars.$bg-color;
+
+      border-radius: 50%;
+    }
+  }
+
+  &__btn {
+    width: 100%;
+    border-radius: vars.$rounded !important;
+    margin-block: vars.$regular-gap !important;
+
+    background-color: rgba($color: vars.$active-color, $alpha: 0.1) !important;
+    color: vars.$active-color !important;
+  }
+}

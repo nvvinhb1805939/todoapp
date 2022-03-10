@@ -1,54 +1,14 @@
 @use '../../sass/variables' as vars;
 
 .header {
-  $padding-inline: 1.2rem;
-  $search-height: 4rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
 
-  &__logo {
-    font-size: vars.$large-font-size;
-    font-weight: 600;
-  }
-
-  &__search {
-    flex-basis: 50%;
-    position: relative;
-    height: $search-height;
-
-    border: vars.$border-slight-width solid vars.$type-4-color;
-    border-radius: 2rem;
-    overflow: hidden;
-  }
-
-  &__form {
-    position: absolute;
-    inset: 0;
-  }
-
-  &__input {
-    position: absolute;
-    inset: 0;
-    padding: 0.8rem calc($search-height + $padding-inline) 0.8rem $padding-inline;
-
-    font-size: vars.$small-font-size;
-    line-height: $search-height;
-    letter-spacing: vars.$small-letter-spacing;
-    border: 0;
-  }
-
-  &__search-btn {
-    $padding: 2px;
-
-    position: absolute;
-    right: $padding;
-    top: $padding;
-    bottom: $padding;
-
-    width: calc($search-height - 2 * (vars.$border-slight-width + $padding));
-
-    border-radius: 50%;
-    background-color: vars.$type-4-color;
-    color: vars.$primary-fg-color;
-  }
+  background-color: vars.$bg-color;
+  box-shadow: 0 1px 5px vars.$second-bg-color;
 
   &__dropdown {
     position: relative;
@@ -56,20 +16,12 @@
 
   &__collapse {
     position: absolute;
-    left: 0;
     right: 0;
-    border: vars.$border-slight-width solid rgba($color: vars.$primary-bg-color, $alpha: 0.2);
-  }
+    width: max-content;
+    z-index: 1;
 
-  &__icon {
-    $margin-inline: 1.2rem;
-
-    &--left {
-      margin-left: $margin-inline;
-    }
-
-    &--right {
-      margin-right: $margin-inline;
-    }
+    margin-top: vars.$small-gap;
+    background-color: vars.$bg-color;
+    border: vars.$border-slight-width solid rgba($color: vars.$text-color, $alpha: 0.2);
   }
 }

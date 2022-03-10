@@ -1,0 +1,8 @@
+@use '../../sass/variables' as vars;
+.todo {
+  $header-height: 4.5rem;
+
+  width: 100% !important;
+  margin-top: calc($header-height + vars.$regular-gap) !important;
+  margin-left: 0 !important;
+}

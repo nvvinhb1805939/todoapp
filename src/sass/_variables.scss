@@ -1,22 +1,19 @@
 /*=========================COLOR=========================*/
-$primary-bg-color: #353a40;
-$second-bg-color: #2c3137;
-$primary-fg-color: white;
-$text-color: #495058;
-$active-color: #6841da;
-$type-1-color: #e54980;
-$type-2-color: #ae3dc9;
-$type-3-color: #e67701;
-$type-4-color: #74b815;
+$bg-color: white;
+$second-bg-color: #deedeb;
+$text-color: #2b2b2b;
+$active-color: #9c27b0;
+$sign-color: #58ae9d;
 /*=========================BORDER=========================*/
 $border-slight-width: 1px;
+$rounded: 0.625rem;
 /*=========================TYPHOGRAPHY=========================*/
-$small-font-size: 1.4rem;
-$regular-font-size: 1.6rem;
-$large-font-size: 2rem;
-$x-large-font-size: 2.4rem;
-$largest-font-size: 3.2rem;
+$small-font-size: 0.875rem;
+$regular-font-size: 1.25rem;
+$large-font-size: 1.5rem;
 
 $small-letter-spacing: 0.025em;
-$regular-letter-spacing: 0.035em;
-$large-letter-spacing: 0.05em;
+/*=========================GAP=========================*/
+$small-gap: 0.9375rem;
+$regular-gap: 1.5rem;
+$medium-gap: 1.875rem;
