@@ -7,13 +7,15 @@ import './ModalComponent.scss';
 ModalComponent.propTypes = {
   isShow: PropTypes.bool,
   onCloseClick: PropTypes.func,
+  isEdit: PropTypes.bool,
 };
 ModalComponent.defaultProps = {
   isShow: false,
   onCloseClick: null,
+  isEdit: false,
 };
 
-function ModalComponent({ isShow, onCloseClick }) {
+function ModalComponent({ isShow, onCloseClick, isEdit }) {
   const handleCloseClick = () => {
     if (!onCloseClick) return;
     onCloseClick();
@@ -22,7 +24,7 @@ function ModalComponent({ isShow, onCloseClick }) {
     <Modal open={isShow} onClose={handleCloseClick}>
       <Box className='modal__container'>
         <Typography className='modal__heading' variant='h4'>
-          Add card
+          {isEdit ? 'Edit card' : 'Add card'}
         </Typography>
         <TodoForm />
       </Box>

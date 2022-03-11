@@ -11,19 +11,25 @@ TodoList.propTypes = {
   quantiy: PropTypes.number,
   itemList: PropTypes.array,
   onAddClick: PropTypes.func,
+  onEditClick: PropTypes.func,
+  onDeleteClick: PropTypes.func,
 };
 TodoList.defaultProps = {
   quantiy: 0,
   itemList: [],
   onAddClick: null,
+  onEditClick: null,
+  onDeleteClick: null,
 };
 
 function TodoList(props) {
-  const { status, quantiy, itemList, onAddClick } = props;
+  const { status, quantiy, itemList, onAddClick, onEditClick, onDeleteClick } = props;
+
   const handleAddClick = () => {
     if (!onAddClick) return;
     onAddClick();
   };
+
   return (
     <Grid item xs={4} className='todo-list'>
       <Box className='todo-list__wrapper'>
@@ -40,7 +46,13 @@ function TodoList(props) {
         </IconButton>
         <Stack spacing={3}>
           {itemList.map(item => (
-            <TodoItem key={item.id} title={item.title} contentList={item.contentList} />
+            <TodoItem
+              key={item.id}
+              title={item.title}
+              content={item.content}
+              onEditClick={onEditClick}
+              onDeleteClick={onDeleteClick}
+            />
           ))}
         </Stack>
       </Box>

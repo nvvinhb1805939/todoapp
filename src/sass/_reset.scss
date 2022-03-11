@@ -37,3 +37,22 @@ button {
   outline: none;
   cursor: pointer;
 }
+
+/*===========Custom Scrollbar===========*/
+::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+::-webkit-scrollbar-track {
+  background-color: rgba($color: vars.$active-color, $alpha: 0.25);
+  border-radius: vars.$rounded;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba($color: vars.$active-color, $alpha: 0.75);
+  border-radius: vars.$rounded;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba($color: vars.$active-color, $alpha: 0.5);
+}
