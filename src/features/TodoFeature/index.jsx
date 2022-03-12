@@ -7,7 +7,7 @@ import ModalComponent from '../../components/ModalComponent';
 import TodoList from './components/TodoList';
 import './Todo.scss';
 
-function TodoFeature(props) {
+function TodoFeature() {
   const [isShow, setIsShow] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [status, setStatus] = useState(0);
