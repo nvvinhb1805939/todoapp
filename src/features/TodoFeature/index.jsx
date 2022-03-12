@@ -1,7 +1,6 @@
 import { Grid } from '@mui/material';
 import casual from 'casual-browserify';
 import React, { useState } from 'react';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { useDispatch, useSelector } from 'react-redux';
 import { addNewTodo, deleteTodo, editTodo } from '../../actions/todo';
 import ModalComponent from '../../components/ModalComponent';
@@ -48,58 +47,43 @@ function TodoFeature(props) {
     } else {
       const action = editTodo(data);
       dispatch(action);
+      setIsEdit(false);
     }
     setIsShow(false);
   };
 
-  /*********** Drag And Drop Todo ***********/
-
-  /**
-   * Moves an item from one list to another list.
-   */
-
-  const onDragEnd = result => {
-    const { source, destination } = result;
-    // dropped outside the list
-    if (!destination) {
-      return;
-    }
-  };
-
   return (
     <Grid className='todo' container>
-      <DragDropContext onDragEnd={onDragEnd}>
-        <TodoList
-          quantiy={todoList.length}
-          itemList={todoList}
-          onAddClick={handleOnAddClick}
-          onEditClick={handleEditClick}
-          onDeleteClick={handleDeleteClick}
-        />
-        <TodoList
-          status={1}
-          quantiy={inProgressList.length}
-          itemList={inProgressList}
-          onAddClick={handleOnAddClick}
-          onEditClick={handleEditClick}
-          onDeleteClick={handleDeleteClick}
-        />
-        <TodoList
-          status={2}
-          quantiy={completedList.length}
-          itemList={completedList}
-          onAddClick={handleOnAddClick}
-          onEditClick={handleEditClick}
-          onDeleteClick={handleDeleteClick}
-        />
-        <ModalComponent
-          isShow={isShow}
-          isEdit={isEdit}
-          onCloseClick={handleCloseClick}
-          onSubmit={handleOnSubmit}
-          defaultValues={defaultValues}
-        />
-      </DragDropContext>
+      <TodoList
+        quantiy={todoList.length}
+        itemList={todoList}
+        onAddClick={handleOnAddClick}
+        onEditClick={handleEditClick}
+        onDeleteClick={handleDeleteClick}
+      />
+      <TodoList
+        status={1}
+        quantiy={inProgressList.length}
+        itemList={inProgressList}
+        onAddClick={handleOnAddClick}
+        onEditClick={handleEditClick}
+        onDeleteClick={handleDeleteClick}
+      />
+      <TodoList
+        status={2}
+        quantiy={completedList.length}
+        itemList={completedList}
+        onAddClick={handleOnAddClick}
+        onEditClick={handleEditClick}
+        onDeleteClick={handleDeleteClick}
+      />
+      <ModalComponent
+        isShow={isShow}
+        isEdit={isEdit}
+        onCloseClick={handleCloseClick}
+        onSubmit={handleOnSubmit}
+        defaultValues={defaultValues}
+      />
     </Grid>
   );
 }
