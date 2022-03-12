@@ -19,14 +19,16 @@ function InputField(props) {
     <Controller
       name={name}
       control={control}
-      render={({ field: { onChange }, formState: { errors } }) => (
+      render={({ field: { onChange, value }, formState: { errors } }) => (
         <TextField
           className='todo-form__input'
           sx={{ width: '100%' }}
+          inputProps={{ style: { fontSize: 14 } }}
           variant='outlined'
           color='secondary'
           label={label}
           onChange={onChange}
+          value={value}
           error={!!errors?.[name]}
           helperText={errors?.[name]?.message}
           {...rest}

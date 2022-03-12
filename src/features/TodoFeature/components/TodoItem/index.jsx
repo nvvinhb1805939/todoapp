@@ -6,32 +6,34 @@ import React from 'react';
 import './TodoItem.scss';
 
 TodoItem.propTypes = {
+  id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  content: PropTypes.string,
+  description: PropTypes.string,
   onEditClick: PropTypes.func,
   onDeleteClick: PropTypes.func,
 };
 TodoItem.defaultProps = {
-  content: '',
+  description: '',
   onEditClick: null,
   onDeleteClick: null,
 };
 
 function TodoItem(props) {
-  const { title, content, onEditClick, onDeleteClick } = props;
+  const { id, title, description, onEditClick, onDeleteClick } = props;
 
   const handleEditClick = () => {
     if (!onEditClick) return;
-    onEditClick();
+    onEditClick(id);
   };
   const handleDeleteClick = () => {
     if (!onDeleteClick) return;
-    onDeleteClick();
+    onDeleteClick(id);
   };
 
   return (
     <Card className='todo-item' sx={{ boxShadow: 'none' }}>
       <CardHeader
+        sx={{ paddingBottom: 0 }}
         className='todo-item__heading'
         action={
           <>
@@ -46,8 +48,8 @@ function TodoItem(props) {
         title={title}
       />
       <CardContent>
-        <Typography paragraph variant='body2' gutterBottom>
-          {content}
+        <Typography sx={{ marginBottom: 0, whiteSpace: 'pre-line' }} paragraph variant='body2'>
+          {description}
         </Typography>
       </CardContent>
     </Card>
