@@ -10,6 +10,7 @@ import clsx from 'clsx';
 TodoItem.propTypes = {
   index: PropTypes.number.isRequired,
   id: PropTypes.string.isRequired,
+  listId: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   description: PropTypes.string,
   onEditClick: PropTypes.func,
@@ -22,15 +23,15 @@ TodoItem.defaultProps = {
 };
 
 function TodoItem(props) {
-  const { index, id, title, description, onEditClick, onDeleteClick } = props;
+  const { index, id, listId, title, description, onEditClick, onDeleteClick } = props;
 
   const handleEditClick = () => {
     if (!onEditClick) return;
-    onEditClick(id);
+    onEditClick(listId, id);
   };
   const handleDeleteClick = () => {
     if (!onDeleteClick) return;
-    onDeleteClick(id);
+    onDeleteClick(listId, id);
   };
 
   return (

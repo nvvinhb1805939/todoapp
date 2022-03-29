@@ -54,6 +54,7 @@ function TodoList(props) {
                   index={index}
                   key={item.id}
                   id={item.id}
+                  listId={id}
                   title={item.title}
                   description={item.description}
                   onEditClick={onEditClick}

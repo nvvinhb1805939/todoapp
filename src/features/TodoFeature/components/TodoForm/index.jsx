@@ -25,7 +25,7 @@ TodoForm.defaultProps = {
 function TodoForm({ onSubmit, isEdit, defaultValues }) {
   const schema = yup.object().shape({
     title: yup.string().trim().required('This field is not empty').min(3, 'This field contains at least 3 characters'),
-    description: yup.string(),
+    description: yup.string().trim(),
   });
 
   const formValues = isEdit

@@ -1,34 +1,39 @@
 import { Grid } from '@mui/material';
-import casual from 'casual-browserify';
 import React, { useState } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
-import { useDispatch, useSelector } from 'react-redux';
-import { addNewTodo, deleteTodo, editTodo } from '../../actions/todo';
 import ModalComponent from '../../components/ModalComponent';
 import TodoList from './components/TodoList';
 import './Todo.scss';
+import casual from 'casual-browserify';
 
 function TodoFeature() {
+  const [todoList, setTodoList] = useState([
+    {
+      title: 'Todo',
+      value: [
+        { id: '1', title: 'title1', description: '' },
+        { id: '2', title: 'title2', description: '' },
+      ],
+    },
+    {
+      title: 'In progress',
+      value: [
+        { id: '3', title: 'title3', description: '' },
+        { id: '4', title: 'title4', description: '' },
+      ],
+    },
+    {
+      title: 'Completed',
+      value: [
+        { id: '5', title: 'title5', description: '' },
+        { id: '6', title: 'title6', description: '' },
+      ],
+    },
+  ]);
   const [isShow, setIsShow] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [status, setStatus] = useState(0);
   const [defaultValues, setDefaultValues] = useState({});
-  const DATA = useSelector(state => state.todo);
-  const TODO_LIST = [
-    {
-      title: 'Todo',
-      value: DATA.filter(item => item.status === 0),
-    },
-    {
-      title: 'In progress',
-      value: DATA.filter(item => item.status === 1),
-    },
-    {
-      title: 'Completed',
-      value: DATA.filter(item => item.status === 2),
-    },
-  ];
-  const dispatch = useDispatch();
 
   const handleOnAddClick = newStatus => {
     setIsShow(true);
@@ -38,44 +43,52 @@ function TodoFeature() {
     setIsShow(false);
     setIsEdit(false);
   };
-  const handleEditClick = id => {
+  const handleEditClick = (listId, id) => {
     setIsShow(true);
     setIsEdit(true);
-    const editedTodo = DATA.find(todo => todo.id === id);
+    setStatus(listId);
+    const editedTodo = todoList[listId].value.find(todo => todo.id === id);
     setDefaultValues(editedTodo);
   };
-  const handleDeleteClick = id => {
+  const handleDeleteClick = (listId, id) => {
     const isDelete = window.confirm('Would you like to delete it?');
     if (!isDelete) return;
-    const action = deleteTodo(id);
-    dispatch(action);
+    const removedIndex = todoList[listId].value.findIndex(todo => todo.id === id);
+    const newTodoList = [...todoList];
+    newTodoList[listId].value.splice(removedIndex, 1);
+    setTodoList(newTodoList);
   };
   const handleOnSubmit = data => {
     if (!isEdit) {
       const id = casual.uuid;
-      const newTodo = { ...data, id, status };
-      const action = addNewTodo(newTodo);
-      dispatch(action);
+      const newTodo = { ...data, id };
+      const newTodoList = [...todoList];
+      newTodoList.splice(status, 1, {
+        title: todoList[status].title,
+        value: [...todoList[status].value, newTodo],
+      });
+      setTodoList(newTodoList);
     } else {
-      const action = editTodo(data);
-      dispatch(action);
-      setIsEdit(false);
+      const editedIndex = todoList[status].value.findIndex(todo => todo.id === data.id);
+      const newTodoList = [...todoList];
+      newTodoList[status].value[editedIndex] = data;
+      setTodoList(newTodoList);
     }
     setIsShow(false);
   };
   const handleOnDragEnd = result => {
     const { destination, source } = result;
+    const newTodoList = [...todoList];
     let sourceItem = {};
     if (!destination) return;
-    if (destination.droppableId === source.droppableId && destination.index !== source.index) {
-      [sourceItem] = TODO_LIST[source.droppableId].value.splice(source.index, 1);
-      TODO_LIST[destination.droppableId].value.splice(destination.index, 0, sourceItem);
-    }
+    [sourceItem] = newTodoList[source.droppableId].value.splice(source.index, 1);
+    newTodoList[destination.droppableId].value.splice(destination.index, 0, sourceItem);
+    setTodoList(newTodoList);
   };
   return (
     <DragDropContext onDragEnd={handleOnDragEnd}>
       <Grid className='todo' container>
-        {TODO_LIST.map((ITEM_LIST, index) => (
+        {todoList.map((ITEM_LIST, index) => (
           <TodoList
             key={index}
             id={index}
