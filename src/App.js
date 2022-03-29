@@ -10,33 +10,34 @@ function App() {
     {
       title: 'Todo',
       value: [
-        { id: '1', title: 'title1', description: '' },
-        { id: '2', title: 'title2', description: '' },
+        { id: '1', title: 'Eating', description: '' },
+        { id: '2', title: 'Coding', description: '' },
       ],
     },
     {
       title: 'In progress',
       value: [
-        { id: '3', title: 'title3', description: '' },
-        { id: '4', title: 'title4', description: '' },
+        { id: '3', title: 'Sleepping', description: '' },
+        { id: '4', title: 'Hacking', description: '' },
       ],
     },
     {
       title: 'Completed',
       value: [
-        { id: '5', title: 'title5', description: '' },
-        { id: '6', title: 'title6', description: '' },
+        { id: '5', title: 'Working', description: '' },
+        { id: '6', title: 'Learning', description: 'Learn ReactJS\nLearn Redux' },
       ],
     },
   ]);
   const [filterTodoList, setFilterTodoList] = useState([]);
 
-  const handleSearchChange = data => {
+  const handleSearchChange = value => {
+    const data = value.toLowerCase();
     const newTodoList = [...todoList];
     const result = newTodoList.map(todoListItem => ({
       title: todoListItem.title,
       value: todoListItem.value.filter(
-        todoItem => todoItem.title.includes(data) || todoItem.description.includes(data)
+        todoItem => todoItem.title.toLowerCase().includes(data) || todoItem.description.toLowerCase().includes(data)
       ),
     }));
     setFilterTodoList(result);
