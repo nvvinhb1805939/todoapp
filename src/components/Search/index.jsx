@@ -2,8 +2,21 @@ import SearchIcon from '@mui/icons-material/Search';
 import { Input, InputAdornment } from '@mui/material';
 import { Box } from '@mui/system';
 import React from 'react';
+import PropTypes from 'prop-types';
 
-function Search() {
+Search.propTypes = {
+  onSearch: PropTypes.func,
+};
+Search.defaultProps = {
+  onSearch: null,
+};
+
+function Search({ onSearch }) {
+  const handleOnSearchChange = value => {
+    if (!onSearch) return;
+    onSearch(value);
+  };
+
   return (
     <Box sx={{ flexBasis: '50%' }}>
       <Input
@@ -15,6 +28,9 @@ function Search() {
             <SearchIcon />
           </InputAdornment>
         }
+        onChange={event => {
+          handleOnSearchChange(event.target.value);
+        }}
       />
     </Box>
   );

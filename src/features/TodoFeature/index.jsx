@@ -1,39 +1,20 @@
 import { Grid } from '@mui/material';
-import React, { useState } from 'react';
+import casual from 'casual-browserify';
+import React, { useContext, useState } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
+import { TodoContext } from '../../App';
 import ModalComponent from '../../components/ModalComponent';
 import TodoList from './components/TodoList';
 import './Todo.scss';
-import casual from 'casual-browserify';
 
 function TodoFeature() {
-  const [todoList, setTodoList] = useState([
-    {
-      title: 'Todo',
-      value: [
-        { id: '1', title: 'title1', description: '' },
-        { id: '2', title: 'title2', description: '' },
-      ],
-    },
-    {
-      title: 'In progress',
-      value: [
-        { id: '3', title: 'title3', description: '' },
-        { id: '4', title: 'title4', description: '' },
-      ],
-    },
-    {
-      title: 'Completed',
-      value: [
-        { id: '5', title: 'title5', description: '' },
-        { id: '6', title: 'title6', description: '' },
-      ],
-    },
-  ]);
   const [isShow, setIsShow] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [status, setStatus] = useState(0);
   const [defaultValues, setDefaultValues] = useState({});
+
+  const { todoList, setTodoList, filterTodoList } = useContext(TodoContext);
+  const data = filterTodoList.length > 0 ? filterTodoList : todoList;
 
   const handleOnAddClick = newStatus => {
     setIsShow(true);
@@ -47,38 +28,39 @@ function TodoFeature() {
     setIsShow(true);
     setIsEdit(true);
     setStatus(listId);
-    const editedTodo = todoList[listId].value.find(todo => todo.id === id);
+    const editedTodo = data[listId].value.find(todo => todo.id === id);
     setDefaultValues(editedTodo);
   };
   const handleDeleteClick = (listId, id) => {
     const isDelete = window.confirm('Would you like to delete it?');
     if (!isDelete) return;
-    const removedIndex = todoList[listId].value.findIndex(todo => todo.id === id);
-    const newTodoList = [...todoList];
+    const removedIndex = data[listId].value.findIndex(todo => todo.id === id);
+    const newTodoList = [...data];
     newTodoList[listId].value.splice(removedIndex, 1);
     setTodoList(newTodoList);
   };
-  const handleOnSubmit = data => {
+  const handleOnSubmit = todo => {
     if (!isEdit) {
       const id = casual.uuid;
-      const newTodo = { ...data, id };
-      const newTodoList = [...todoList];
+      const newTodo = { ...todo, id };
+      const newTodoList = [...data];
       newTodoList.splice(status, 1, {
-        title: todoList[status].title,
-        value: [...todoList[status].value, newTodo],
+        title: data[status].title,
+        value: [...data[status].value, newTodo],
       });
       setTodoList(newTodoList);
     } else {
-      const editedIndex = todoList[status].value.findIndex(todo => todo.id === data.id);
-      const newTodoList = [...todoList];
+      const editedIndex = data[status].value.findIndex(todo => todo.id === data.id);
+      const newTodoList = [...data];
       newTodoList[status].value[editedIndex] = data;
       setTodoList(newTodoList);
     }
     setIsShow(false);
+    setIsEdit(false);
   };
   const handleOnDragEnd = result => {
     const { destination, source } = result;
-    const newTodoList = [...todoList];
+    const newTodoList = [...data];
     let sourceItem = {};
     if (!destination) return;
     [sourceItem] = newTodoList[source.droppableId].value.splice(source.index, 1);
@@ -88,7 +70,7 @@ function TodoFeature() {
   return (
     <DragDropContext onDragEnd={handleOnDragEnd}>
       <Grid className='todo' container>
-        {todoList.map((ITEM_LIST, index) => (
+        {data.map((ITEM_LIST, index) => (
           <TodoList
             key={index}
             id={index}

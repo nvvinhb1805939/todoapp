@@ -3,7 +3,9 @@ import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { Avatar, Badge, Collapse, Container, IconButton, List, Stack } from '@mui/material';
-import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import React, { useContext, useState } from 'react';
+import { TodoContext } from '../../App';
 import AVT from '../../assets/img/avt.png';
 import '../../sass/_variables.scss';
 import ItemButton from '../ItemButton';
@@ -11,19 +13,26 @@ import Logo from '../Logo';
 import Search from '../Search';
 import './Header.scss';
 
-Header.propTypes = {};
+Header.propTypes = {
+  onSearch: PropTypes.func,
+};
+Header.defaultProps = {
+  onSearch: null,
+};
 
-function Header(props) {
+function Header({ onSearch }) {
   const [isCollapse, setIsCollapse] = useState(true);
+
   const handleCollapseClick = () => {
     setIsCollapse(!isCollapse);
   };
+
   return (
     <header className='header'>
       <Container>
         <Stack direction='row' justifyContent='space-between' alignItems='center' spacing='30px'>
           <Logo />
-          <Search />
+          <Search onSearch={onSearch} />
           <Stack className='header__user' direction='row' alignItems='center' spacing={2}>
             <IconButton>
               <Badge color='secondary' variant='dot'>
